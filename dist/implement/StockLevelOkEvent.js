@@ -3,7 +3,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.StockLevelOkEvent = void 0;
 class StockLevelOkEvent {
     constructor(_machineId) {
-        this._machineId = _machineId;
         this._type = "ok";
         this._machineId = _machineId;
     }

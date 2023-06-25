@@ -11,10 +11,10 @@ import { PubSubService } from '../implement/PubSubService';
 import { Machine } from '../model/Machine';
 
 export class MachineRefillSubscriber implements ISubscriber {
-  private _machines;
+  private _machines: Machine [];
   private _pubSubService: IPublishSubscribeService;
   
-  constructor(_machines: Machine[], ) {
+  constructor(_machines: Machine[]) {
     this._machines = _machines;
     this._pubSubService = new PubSubService();
   }

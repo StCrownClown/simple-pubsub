@@ -1,6 +1,6 @@
-import { IRefillEvent  } from '../interface/IRefillEvent';
+import { IEvent  } from '../interface/IEvent';
 
-export class MachineRefillEvent implements IRefillEvent  {
+export class MachineRefillEvent implements IEvent  {
   private _type: string = "refill";
   private readonly _refill;
   private readonly _machineId;

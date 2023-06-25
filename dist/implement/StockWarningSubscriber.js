@@ -10,7 +10,10 @@ class StockWarningSubscriber {
     handle(event) {
         console.log(event);
         if (event.type() === 'low') {
-            console.log("lowStockWarning");
+            console.log("LowStockWarningEvent");
+        }
+        else {
+            console.log("StockLevelOkEvent");
         }
     }
 }

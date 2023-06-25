@@ -55,6 +55,7 @@ const eventGenerator = (): IEvent => {
   pubSubService.subscribe('sale', saleSubscriber);
   pubSubService.subscribe('refill', refillSubscriber);
   pubSubService.subscribe('low', stockWarningSubscriber);
+  pubSubService.subscribe('ok', stockWarningSubscriber);
 
   // create 5 random events
   const events = [1,2,3,4,5].map(i => eventGenerator());
