@@ -1,13 +1,22 @@
 import { IEvent } from '../interface/IEvent';
 
 export class MachineRefillEvent implements IEvent {
-  constructor(private readonly _refill: number, private readonly _machineId: string) {}
+  private _type: string = "refill";
+  
+  constructor(private readonly _refill: number, private readonly _machineId: string) {
+    this._refill = _refill;
+    this._machineId = _machineId;
+  }
+
+  getRefill(): number {
+    return this._refill;
+  }
 
   machineId(): string {
-    throw new Error("Method not implemented.");
+    return this._machineId;
   }
 
   type(): string {
-    throw new Error("Method not implemented.");
+    return this._type;
   }
 }
