@@ -1,78 +1,17 @@
 // interfaces
-interface IEvent {
-  type(): string;
-  machineId(): string;
-}
-
-interface ISubscriber {
-  handle(event: IEvent): void;
-}
-
-interface IPublishSubscribeService {
-  publish (event: IEvent): void;
-  subscribe (type: string, handler: ISubscriber): void;
-  // unsubscribe ( /* Question 2 - build this feature */ );
-}
-
+import { IEvent } from './interface/IEvent';
+import { ISubscriber } from './interface/ISubscriber';
+import { IPublishSubscribeService } from './interface/IPublishSubscribeService';
 
 // implementations
-class MachineSaleEvent implements IEvent {
-  constructor(private readonly _sold: number, private readonly _machineId: string) {}
-
-  machineId(): string {
-    return this._machineId;
-  }
-
-  getSoldQuantity(): number {
-    return this._sold
-  }
-
-  type(): string {
-    return 'sale';
-  }
-}
-
-class MachineRefillEvent implements IEvent {
-  constructor(private readonly _refill: number, private readonly _machineId: string) {}
-
-  machineId(): string {
-    throw new Error("Method not implemented.");
-  }
-
-  type(): string {
-    throw new Error("Method not implemented.");
-  }
-}
-
-class MachineSaleSubscriber implements ISubscriber {
-  public machines: Machine[];
-
-  constructor (machines: Machine[]) {
-    this.machines = machines; 
-  }
-
-  handle(event: MachineSaleEvent): void {
-    this.machines[2].stockLevel -= event.getSoldQuantity();
-  }
-}
-
-class MachineRefillSubscriber implements ISubscriber {
-  handle(event: IEvent): void {
-    throw new Error("Method not implemented.");
-  }
-}
-
+import { MachineRefillEvent } from './implement/MachineRefillEvent';
+import { MachineRefillSubscriber } from './implement/MachineRefillSubscriber';
+import { MachineSaleEvent } from './implement/MachineSaleEvent';
+import { MachineSaleSubscriber } from './implement/MachineSaleSubscriber';
+import { PubSubService } from './implement/PubSubService';
 
 // objects
-class Machine {
-  public stockLevel = 10;
-  public id: string;
-
-  constructor (id: string) {
-    this.id = id;
-  }
-}
-
+import { Machine } from './model/Machine';
 
 // helpers
 const randomMachine = (): string => {
@@ -105,8 +44,8 @@ const eventGenerator = (): IEvent => {
   // create a machine sale event subscriber. inject the machines (all subscribers should do this)
   const saleSubscriber = new MachineSaleSubscriber(machines);
 
-  // create the PubSub service
-  const pubSubService: IPublishSubscribeService = null as unknown as IPublishSubscribeService; // implement and fix this
+  // const pubSubService: IPublishSubscribeService = null as unknown as IPublishSubscribeService; // implement and fix this
+  const pubSubService: IPublishSubscribeService = new PubSubService();
 
   // create 5 random events
   const events = [1,2,3,4,5].map(i => eventGenerator());
