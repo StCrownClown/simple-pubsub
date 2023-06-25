@@ -3,6 +3,7 @@ import { ISubscriber } from '../interface/ISubscriber';
 
 // implementations
 import { MachineSaleEvent } from '../implement/MachineSaleEvent';
+import { LowStockWarningEvent } from '../implement/LowStockWarningEvent';
 import { IPublishSubscribeService } from '../interface/IPublishSubscribeService';
 
 // objects
@@ -15,6 +16,13 @@ export class MachineSaleSubscriber implements ISubscriber {
   }
 
   handle(event: MachineSaleEvent): void {
-    this._machines[2].stockLevel -= event.getSoldQuantity();
+    const machine = this._machines.find(m => m.id === event.machineId());
+    if (machine) {
+      machine.stockLevel = machine.stockLevel - event.getSoldQuantity();
+      if (machine.stockLevel < 3) {
+        machine.isLowStock = true
+        this._pubSubService.publish(new LowStockWarningEvent(machine.id))
+      }
+    }
   }
 }
