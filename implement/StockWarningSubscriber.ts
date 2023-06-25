@@ -10,24 +10,19 @@ import { PubSubService } from '../implement/PubSubService';
 // objects
 import { Machine } from '../model/Machine';
 
-export class MachineSaleSubscriber implements ISubscriber {
+export class StockWarningSubscriber implements ISubscriber {
   private _machines;
   private _pubSubService: IPublishSubscribeService;
   
-  constructor(_machines: Machine[], ) {
+  constructor(_machines: Machine[]) {
     this._machines = _machines;
     this._pubSubService = new PubSubService();
   }
-
-  handle(event: MachineSaleEvent): void {
-    const machine = this._machines.find(m => m.id === event.machineId());
+  
+  handle(event: LowStockWarningEvent): void {
     console.log(event)
-    if (machine && event.type() === "sale") {
-      machine.stockLevel = machine.stockLevel - event.getSoldQuantity();
-      if (machine.stockLevel < 3) {
-        machine.isLowStock = true
-        this._pubSubService.publish(new LowStockWarningEvent(machine.id))
-      }
-    }
+    if (event.type() === 'low') {
+      console.log("lowStockWarning");
+    } 
   }
 }

@@ -1,9 +1,11 @@
 import { IEvent } from '../interface/IEvent';
 
 export class MachineSaleEvent implements IEvent {
-  private _type: string = "refill";
+  private _type: string = "sale";
+  private readonly _sold;
+  private readonly _machineId;
 
-  constructor(private readonly _sold: number, private readonly _machineId: string) {
+  constructor(_sold: number, _machineId: string) {
     this._sold = _sold;
     this._machineId = _machineId;
   }

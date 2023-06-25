@@ -2,8 +2,9 @@ import { IEvent } from '../interface/IEvent';
 
 export class LowStockWarningEvent implements IEvent {
   private _type: string = "low";
+  private readonly _machineId;
 
-  constructor(private readonly _machineId: string) {
+  constructor(_machineId: string) {
     this._machineId = _machineId;
   }
 

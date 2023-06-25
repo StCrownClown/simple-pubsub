@@ -1,9 +1,11 @@
-import { IEvent } from '../interface/IEvent';
+import { IRefillEvent  } from '../interface/IRefillEvent';
 
-export class MachineRefillEvent implements IEvent {
+export class MachineRefillEvent implements IRefillEvent  {
   private _type: string = "refill";
+  private readonly _refill;
+  private readonly _machineId;
 
-  constructor(private readonly _refill: number, private readonly _machineId: string) {
+  constructor(_refill: number, _machineId: string) {
     this._refill = _refill;
     this._machineId = _machineId;
   }

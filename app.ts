@@ -9,6 +9,7 @@ import { MachineRefillSubscriber } from './implement/MachineRefillSubscriber';
 import { MachineSaleEvent } from './implement/MachineSaleEvent';
 import { MachineSaleSubscriber } from './implement/MachineSaleSubscriber';
 import { PubSubService } from './implement/PubSubService';
+import { StockWarningSubscriber } from './implement/StockWarningSubscriber';
 
 // objects
 import { Machine } from './model/Machine';
@@ -40,18 +41,24 @@ const eventGenerator = (): IEvent => {
 (async () => {
   // create 3 machines with a quantity of 10 stock
   const machines: Machine[] = [ new Machine('001'), new Machine('002'), new Machine('003') ];
-  
+
+  // const pubSubService: IPublishSubscribeService = null as unknown as IPublishSubscribeService; // implement and fix this
+
+  // create a machine sale event subscriber. inject the machines (all subscribers should do this)
+  const saleSubscriber = new MachineSaleSubscriber(machines);
+  const refillSubscriber = new MachineRefillSubscriber(machines);
+  const stockWarningSubscriber = new StockWarningSubscriber(machines);
+
   // const pubSubService: IPublishSubscribeService = null as unknown as IPublishSubscribeService; // implement and fix this
   const pubSubService: IPublishSubscribeService = new PubSubService();
 
-  // create a machine sale event subscriber. inject the machines (all subscribers should do this)
-  const saleSubscriber = new MachineSaleSubscriber(machines, pubSubService);
-
-  const refillSubscriber = new MachineRefillSubscriber(machines, pubSubService);
+  pubSubService.subscribe('sale', saleSubscriber);
+  pubSubService.subscribe('refill', refillSubscriber);
+  pubSubService.subscribe('low', stockWarningSubscriber);
 
   // create 5 random events
   const events = [1,2,3,4,5].map(i => eventGenerator());
 
   // publish the events
-  events.map(pubSubService.publish);
+  events.forEach(event => pubSubService.publish(event));
 })();
