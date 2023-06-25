@@ -2,11 +2,10 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.MachineRefillSubscriber = void 0;
 const StockLevelOkEvent_1 = require("../implement/StockLevelOkEvent");
-const PubSubService_1 = require("../implement/PubSubService");
 class MachineRefillSubscriber {
-    constructor(_machines) {
+    constructor(_machines, _pubSubService) {
         this._machines = _machines;
-        this._pubSubService = new PubSubService_1.PubSubService();
+        this._pubSubService = _pubSubService;
     }
     handle(event) {
         const machine = this._machines.find(m => m.id === event.machineId());

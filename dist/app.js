@@ -43,12 +43,12 @@ const eventGenerator = () => {
     // create 3 machines with a quantity of 10 stock
     const machines = [new Machine_1.Machine('001'), new Machine_1.Machine('002'), new Machine_1.Machine('003')];
     // const pubSubService: IPublishSubscribeService = null as unknown as IPublishSubscribeService; // implement and fix this
-    // create a machine sale event subscriber. inject the machines (all subscribers should do this)
-    const saleSubscriber = new MachineSaleSubscriber_1.MachineSaleSubscriber(machines);
-    const refillSubscriber = new MachineRefillSubscriber_1.MachineRefillSubscriber(machines);
-    const stockWarningSubscriber = new StockWarningSubscriber_1.StockWarningSubscriber(machines);
-    // const pubSubService: IPublishSubscribeService = null as unknown as IPublishSubscribeService; // implement and fix this
     const pubSubService = new PubSubService_1.PubSubService();
+    // create a machine sale event subscriber. inject the machines (all subscribers should do this)
+    const saleSubscriber = new MachineSaleSubscriber_1.MachineSaleSubscriber(machines, pubSubService);
+    const refillSubscriber = new MachineRefillSubscriber_1.MachineRefillSubscriber(machines, pubSubService);
+    const stockWarningSubscriber = new StockWarningSubscriber_1.StockWarningSubscriber(machines);
+    // const pubSubService: IPublishSubscribeService = new PubSubService();
     pubSubService.subscribe('sale', saleSubscriber);
     pubSubService.subscribe('refill', refillSubscriber);
     pubSubService.subscribe('low', stockWarningSubscriber);

@@ -44,13 +44,12 @@ const eventGenerator = (): IEvent => {
 
   // const pubSubService: IPublishSubscribeService = null as unknown as IPublishSubscribeService; // implement and fix this
 
-  // create a machine sale event subscriber. inject the machines (all subscribers should do this)
-  const saleSubscriber = new MachineSaleSubscriber(machines);
-  const refillSubscriber = new MachineRefillSubscriber(machines);
-  const stockWarningSubscriber = new StockWarningSubscriber(machines);
+  const pubSubService = new PubSubService();
 
-  // const pubSubService: IPublishSubscribeService = null as unknown as IPublishSubscribeService; // implement and fix this
-  const pubSubService: IPublishSubscribeService = new PubSubService();
+  // create a machine sale event subscriber. inject the machines (all subscribers should do this)
+  const saleSubscriber = new MachineSaleSubscriber(machines, pubSubService);
+  const refillSubscriber = new MachineRefillSubscriber(machines, pubSubService);
+  const stockWarningSubscriber = new StockWarningSubscriber(machines);
 
   pubSubService.subscribe('sale', saleSubscriber);
   pubSubService.subscribe('refill', refillSubscriber);

@@ -14,9 +14,9 @@ export class MachineRefillSubscriber implements ISubscriber {
   private _machines: Machine [];
   private _pubSubService: IPublishSubscribeService;
   
-  constructor(_machines: Machine[]) {
+  constructor(_machines: Machine[], _pubSubService: IPublishSubscribeService) {
     this._machines = _machines;
-    this._pubSubService = new PubSubService();
+    this._pubSubService = _pubSubService;
   }
 
   handle(event: MachineRefillEvent): void {
