@@ -48,7 +48,6 @@ const eventGenerator = () => {
     const saleSubscriber = new MachineSaleSubscriber_1.MachineSaleSubscriber(machines, pubSubService);
     const refillSubscriber = new MachineRefillSubscriber_1.MachineRefillSubscriber(machines, pubSubService);
     const stockWarningSubscriber = new StockWarningSubscriber_1.StockWarningSubscriber(machines);
-    // const pubSubService: IPublishSubscribeService = new PubSubService();
     pubSubService.subscribe('sale', saleSubscriber);
     pubSubService.subscribe('refill', refillSubscriber);
     pubSubService.subscribe('low', stockWarningSubscriber);

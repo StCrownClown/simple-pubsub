@@ -10,9 +10,9 @@ class MachineRefillSubscriber {
     handle(event) {
         const machine = this._machines.find(m => m.id === event.machineId());
         console.log(event);
-        if (machine && event.type() === "refill") {
+        if (machine) {
             machine.stockLevel = machine.stockLevel + event.getRefillQuantity();
-            if (machine.stockLevel >= 3) {
+            if (machine.stockLevel >= 3 && machine.isLowStock === false) {
                 machine.isLowStock = false;
                 this._pubSubService.publish(new StockLevelOkEvent_1.StockLevelOkEvent(machine.id));
             }

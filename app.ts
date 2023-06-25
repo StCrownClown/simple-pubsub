@@ -1,7 +1,5 @@
 // interfaces
 import { IEvent } from './interface/IEvent';
-import { ISubscriber } from './interface/ISubscriber';
-import { IPublishSubscribeService } from './interface/IPublishSubscribeService';
 
 // implementations
 import { MachineRefillEvent } from './implement/MachineRefillEvent';

@@ -5,7 +5,6 @@ import { IPublishSubscribeService } from '../interface/IPublishSubscribeService'
 // implementations
 import { MachineSaleEvent } from '../implement/MachineSaleEvent';
 import { LowStockWarningEvent } from '../implement/LowStockWarningEvent';
-import { PubSubService } from '../implement/PubSubService';
 
 // objects
 import { Machine } from '../model/Machine';
@@ -22,9 +21,9 @@ export class MachineSaleSubscriber implements ISubscriber {
   handle(event: MachineSaleEvent): void {
     const machine = this._machines.find(m => m.id === event.machineId());
     console.log(event)
-    if (machine && event.type() === "sale") {
+    if (machine) {
       machine.stockLevel = machine.stockLevel - event.getSoldQuantity();
-      if (machine.stockLevel < 3) {
+      if (machine.stockLevel < 3 && machine.isLowStock) {
         machine.isLowStock = true
         this._pubSubService.publish(new LowStockWarningEvent(machine.id))
       }

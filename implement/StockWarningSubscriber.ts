@@ -4,8 +4,6 @@ import { IPublishSubscribeService } from '../interface/IPublishSubscribeService'
 import { IEvent } from '../interface/IEvent';
 
 // implementations
-import { MachineSaleEvent } from '../implement/MachineSaleEvent';
-import { LowStockWarningEvent } from '../implement/LowStockWarningEvent';
 import { PubSubService } from '../implement/PubSubService';
 
 // objects

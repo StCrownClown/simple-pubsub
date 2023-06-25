@@ -10,9 +10,9 @@ class MachineSaleSubscriber {
     handle(event) {
         const machine = this._machines.find(m => m.id === event.machineId());
         console.log(event);
-        if (machine && event.type() === "sale") {
+        if (machine) {
             machine.stockLevel = machine.stockLevel - event.getSoldQuantity();
-            if (machine.stockLevel < 3) {
+            if (machine.stockLevel < 3 && machine.isLowStock) {
                 machine.isLowStock = true;
                 this._pubSubService.publish(new LowStockWarningEvent_1.LowStockWarningEvent(machine.id));
             }
